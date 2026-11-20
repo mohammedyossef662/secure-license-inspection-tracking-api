@@ -56,7 +56,7 @@ def test_website_is_served_at_root(client) -> None:
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]
     assert "Regulatory License" in response.text
-    assert "/docs" in response.text
+    assert "openapi.json" in response.text
 
     asset = client.get("/assets/app.js")
     assert asset.status_code == 200

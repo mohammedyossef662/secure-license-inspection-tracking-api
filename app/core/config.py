@@ -28,7 +28,7 @@ class Settings(BaseSettings):
     app_version: str = "0.1.0"
     environment: Literal["development", "test", "production"] = "development"
     debug: bool = False
-    docs_enabled: bool = True
+    docs_enabled: bool = False
     log_level: str = "INFO"
 
     # Database

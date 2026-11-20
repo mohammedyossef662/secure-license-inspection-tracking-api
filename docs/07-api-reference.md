@@ -7,9 +7,12 @@ Base URL: `/` (e.g. `http://localhost:8000`)
 
 **Full machine-readable schema:** the API ships the generated OpenAPI document
 at `openapi.json` in the repository root (committed from the running app via
-`FastAPI.openapi()`). You can browse it on GitHub or render it with any
-OpenAPI viewer. The interactive console (Swagger UI) is live at `/docs` when
-the API is running.
+`FastAPI.openapi()`). Browse it on GitHub — it documents every endpoint,
+request/response schema and the RBAC matrix.
+
+The docs UI is disabled by default (`DOCS_ENABLED=false`): `/docs`, `/redoc`
+and `/openapi.json` return 404, so the project stands alone without Swagger.
+Set `DOCS_ENABLED=true` to re-enable the interactive console.
 
 ---
 
@@ -146,7 +149,7 @@ Filters: `action`, `entity`, `entity_id`, `user_id`, `date_from`, `date_to`; pag
 
 ## 10. OpenAPI
 
-- `GET /docs`, `GET /redoc`, `GET /openapi.json` (disabled when `DOCS_ENABLED=false`).
+- Available only when `DOCS_ENABLED=true`: `GET /docs`, `GET /redoc`, `GET /openapi.json`. The schema is committed at `openapi.json` in the repo.
 
 ---
 

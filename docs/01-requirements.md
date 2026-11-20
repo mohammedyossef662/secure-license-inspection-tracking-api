@@ -154,7 +154,7 @@ Priority: **M** = Must, **S** = Should, **C** = Could
 - **API style:** REST over HTTPS, JSON request and response bodies.
 - **Authentication header:** `Authorization: Bearer <token>`
 - **Error format:** `{ "detail": "<message>" }` with correct HTTP status codes (400, 401, 403, 404, 422, 429, 500).
-- **Documentation:** OpenAPI at `/docs` and `/openapi.json`.
+- **Documentation:** the generated OpenAPI schema is committed at `openapi.json` in the repository; the docs UI (`/docs`, `/redoc`, `/openapi.json`) is optional and disabled by default (`DOCS_ENABLED=false`).
 
 ---
 

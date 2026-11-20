@@ -10,7 +10,7 @@ primary_region = "iad"
 [env]
   ENVIRONMENT = "production"
   PORT = "8000"
-  DOCS_ENABLED = "true"
+  DOCS_ENABLED = "false"
   ACCESS_TOKEN_EXPIRE_MINUTES = "30"
 
 [http_service]

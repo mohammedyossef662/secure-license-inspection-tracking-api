@@ -46,7 +46,7 @@ Ports: API `8000/tcp`, database `3306/tcp` (optional host binding).
 | `SECRET_KEY` | Yes (production) | – | JWT signing secret, ≥ 32 chars, no placeholder |
 | `ENVIRONMENT` | No | `development` | `development` / `test` / `production` |
 | `DEBUG` | No | `false` | Debug mode (development only) |
-| `DOCS_ENABLED` | No | `true` | OpenAPI / Swagger / ReDoc availability |
+| `DOCS_ENABLED` | No | `false` | Swagger UI / ReDoc / OpenAPI schema availability |
 | `LOG_LEVEL` | No | `INFO` | Log level |
 | `JWT_ISSUER` | No | `license-inspection-api` | JWT issuer claim |
 | `JWT_AUDIENCE` | No | `license-inspection-api-clients` | JWT audience claim |

@@ -15,10 +15,8 @@
       <nav class="nav">
         <span class="brand">License &amp; Inspection API</span>
         <div class="nav-links">
-          <a href="/docs">Swagger UI</a>
-          <a href="/redoc">ReDoc</a>
-          <a href="/openapi.json">OpenAPI</a>
           <a href="/health">Health</a>
+          <a href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api">GitHub</a>
         </div>
       </nav>
 
@@ -36,16 +34,13 @@
         </div>
 
         <div class="actions">
-          <a class="btn btn-primary" href="/docs" id="api-console">Open the API console</a>
-          <a class="btn" href="/redoc" id="redoc-link">Read the docs</a>
-          <a class="btn" href="/openapi.json" id="openapi-link">OpenAPI schema</a>
+          <a class="btn btn-primary" href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api">View on GitHub</a>
+          <a class="btn" href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api/blob/main/openapi.json">openapi.json</a>
         </div>
 
         <p id="deploy-note" class="muted" hidden>
-          The API console links above turn into "Deploy the API" when no API
-          is reachable from this origin. See
-          <a href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api/blob/main/docs/06-deployment.md">Deploying</a>
-          in the repo for options.
+          The interactive console appears at <code>/docs</code> when the API
+          runs with <code>DOCS_ENABLED=true</code>.
         </p>
       </div>
     </header>
@@ -101,12 +96,8 @@
   -d '{"username":"admin","password":"YourPassword"}'</code></pre>
         <p class="muted">
           Use the returned <code>access_token</code> as a Bearer token on every
-          protected endpoint. Try it interactively in the
-          <a href="/docs">Swagger UI</a>.
-        </p>
-        <p class="muted">
-          If you want the API live so the console links above work, deploy it —
-          see the <a href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api/blob/main/docs/06-deployment.md">deployment docs</a>.
+          protected endpoint. Deploy the API to try it - see the
+          <a href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api/blob/main/docs/06-deployment.md">deployment docs</a>.
         </p>
       </section>
 

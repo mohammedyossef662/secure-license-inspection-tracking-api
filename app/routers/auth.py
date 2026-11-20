@@ -32,8 +32,8 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 async def parse_login_request(request: Request) -> LoginRequest:
     """Accept both JSON and OAuth2-style form bodies.
 
-    JSON is the documented API format; form support keeps the Swagger UI
-    "Authorize" button and standard OAuth2 password-flow clients working.
+    JSON is the documented API format; form support keeps OAuth2
+    password-flow clients working.
     """
 
     content_type = request.headers.get("content-type", "").split(";")[0].strip().lower()

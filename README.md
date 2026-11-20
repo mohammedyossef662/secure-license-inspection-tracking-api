@@ -18,21 +18,20 @@ cp .env.example .env
 docker compose up --build
 ```
 
-The API is then available at <http://localhost:8000>, the interactive
-documentation at <http://localhost:8000/docs>, and the health check at
+The API is then available at <http://localhost:8000> and the health check at
 <http://localhost:8000/health`.
 
 ## Website
 
 The project ships with a static landing page (`docs/index.html`, served by
-the app at **`/`**) — it shows the live API status and links to the Swagger UI,
-ReDoc and OpenAPI schema. Assets are served from `/assets/`. The JSON service
-descriptor is at `/api`.
+the app at **`/`**) - it shows the live API status and links to the GitHub
+repository and the committed OpenAPI schema (`openapi.json`). Assets are
+served from `/assets/`. The JSON service descriptor is at `/api`.
 
 **On GitHub:** the repository hosts the project documentation — `README.md`,
 the API reference `docs/07-api-reference.md`, and the full generated OpenAPI
-schema `openapi.json` (committed from the app via `FastAPI.openapi()`). The
-interactive console is the Swagger UI at `/docs` when the API is running.
+schema `openapi.json` (committed from the app via `FastAPI.openapi()`). The project stands alone without Swagger: `DOCS_ENABLED=false` (the default)
+makes `/docs`, `/redoc` and `/openapi.json` return 404.
 
 ## Quick start (local development)
 
@@ -108,8 +107,8 @@ input echoes.
 
 ## Deploy as a website
 
-The app is a self-contained Docker image (API + landing page + Swagger UI), so
-any container host works. Two one-click options:
+The app is a self-contained Docker image (API + landing page), so any
+container host works. Two one-click options:
 
 **Render (blueprint — API + MySQL included)**
 
@@ -134,8 +133,8 @@ fly deploy
 Railway, AWS, Azure, a VPS, etc.
 
 Before going public set production values: `SECRET_KEY`, `DATABASE_URL`,
-`ENVIRONMENT=production`, `ALLOWED_HOSTS`, `ALLOWED_ORIGINS`. Set
-`DOCS_ENABLED=false` if the Swagger UI should not be public.
+`ENVIRONMENT=production`, `ALLOWED_HOSTS`, `ALLOWED_ORIGINS`. Swagger UI is
+disabled by default (`DOCS_ENABLED=false`).
 
 ## Docs
 
