@@ -75,7 +75,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             "url": "https://www.linkedin.com/in/mohamedyossef963",
         },
         license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
-        swagger_ui_parameters={"persistAuthorization": True},
         lifespan=lifespan,
     )
 
