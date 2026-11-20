@@ -24,17 +24,15 @@ documentation at <http://localhost:8000/docs>, and the health check at
 
 ## Website
 
-The project ships with a static landing page (in `web/`) served by the app at
-**`/`** — it shows the live API status and links to the Swagger UI, ReDoc and
-OpenAPI schema. Assets are served from `/assets/`. The JSON service descriptor
-moved to `/api`.
+The project ships with a static landing page (`docs/index.html`, served by
+the app at **`/`**) — it shows the live API status and links to the Swagger UI,
+ReDoc and OpenAPI schema. Assets are served from `/assets/`. The JSON service
+descriptor is at `/api`.
 
-**On GitHub Pages:** the project is published as the project website at
-<https://mohammedyossef662.github.io/secure-license-inspection-tracking-api/>
-(the landing page is served from `docs/` — GitHub Pages uses the `docs/`
-folder as the site root). Once the API is deployed (see
-[Deploying](docs/06-deployment.md)), the "API console" links open the live
-Swagger UI, and the same page is also served by the API itself at `/`.
+**On GitHub:** the repository hosts the project documentation — `README.md`,
+the API reference `docs/07-api-reference.md`, and the full generated OpenAPI
+schema `openapi.json` (committed from the app via `FastAPI.openapi()`). The
+interactive console is the Swagger UI at `/docs` when the API is running.
 
 ## Quick start (local development)
 
