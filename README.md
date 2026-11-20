@@ -30,8 +30,9 @@ OpenAPI schema. Assets are served from `/assets/`. The JSON service descriptor
 moved to `/api`.
 
 **On GitHub Pages:** the project is published as the project website at
-<https://mohammedyossef662.github.io/secure-license-inspection-tracking-api/>.
-This site is the landing page. Once the API is deployed (see
+<https://mohammedyossef662.github.io/secure-license-inspection-tracking-api/>
+(the landing page is served from `docs/` — GitHub Pages uses the `docs/`
+folder as the site root). Once the API is deployed (see
 [Deploying](docs/06-deployment.md)), the "API console" links open the live
 Swagger UI, and the same page is also served by the API itself at `/`.
 

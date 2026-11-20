@@ -44,7 +44,7 @@ architecture, threat model, test plan and deployment guidance.
 
 # Static website (landing page) served at "/". API routes are registered before
 # the mount, so they always take precedence over static files.
-WEB_DIR = Path(__file__).resolve().parent.parent / "web"
+WEB_DIR = Path(__file__).resolve().parent.parent / "docs"
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
