@@ -5,6 +5,12 @@
 
 Base URL: `/` (e.g. `http://localhost:8000`)
 
+**Full machine-readable schema:** the API ships the generated OpenAPI document
+at `openapi.json` in the repository root (committed from the running app via
+`FastAPI.openapi()`). You can browse it on GitHub or render it with any
+OpenAPI viewer. The interactive console (Swagger UI) is live at `/docs` when
+the API is running.
+
 ---
 
 ## 1. Conventions
