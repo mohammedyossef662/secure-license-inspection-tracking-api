@@ -33,6 +33,11 @@ the API reference `docs/07-api-reference.md`, and the full generated OpenAPI
 schema `openapi.json` (committed from the app via `FastAPI.openapi()`). The project stands alone without Swagger: `DOCS_ENABLED=false` (the default)
 makes `/docs`, `/redoc` and `/openapi.json` return 404.
 
+**On GitHub Pages:** the project website is live at <https://mohammedyossef662.github.io/secure-license-inspection-tracking-api/>
+(source: `main` branch, `docs/` folder - GitHub Pages uses the folder as
+the site root). The landing page is the same `docs/index.html`; the app
+also serves it at `/` when running locally.
+
 ## Quick start (local development)
 
 ```bash

@@ -31,7 +31,13 @@
       }
     })
     .catch(function () {
-      setBadge("bad", "API unreachable");
+      var onPages = location.hostname.endsWith("github.io");
+      setBadge(
+        onPages ? "pending" : "bad",
+        onPages
+          ? "GitHub Pages site - deploy the API for a live console"
+          : "API unreachable"
+      );
       if (versionEl) versionEl.textContent = "";
     });
 })();
