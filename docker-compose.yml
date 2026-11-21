@@ -3,10 +3,10 @@ services:
     image: mysql:8.4
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-momo}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in the environment or via .env}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-license_inspection}
       MYSQL_USER: ${MYSQL_USER:-appuser}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-momo}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in the environment or via .env}
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
@@ -26,7 +26,7 @@ services:
         condition: service_healthy
     environment:
       ENVIRONMENT: production
-      DATABASE_URL: mysql+pymysql://${MYSQL_USER:-appuser}:${MYSQL_PASSWORD:-momo}@db:3306/${MYSQL_DATABASE:-license_inspection}
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER:-appuser}:${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in the environment or via .env}@db:3306/${MYSQL_DATABASE:-license_inspection}
       SECRET_KEY: ${SECRET_KEY:-dev-only-insecure-secret-0123456789abcdef}
       JWT_ISSUER: ${JWT_ISSUER:-license-inspection-api}
       JWT_AUDIENCE: ${JWT_AUDIENCE:-license-inspection-api-clients}

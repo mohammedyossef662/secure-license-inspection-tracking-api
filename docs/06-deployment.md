@@ -42,7 +42,7 @@ Ports: API `8000/tcp`, database `3306/tcp` (optional host binding).
 
 | Variable | Required | Default | Description |
 |---|---:|---:|---|
-| `DATABASE_URL` | Yes | – | SQLAlchemy URL, e.g. `mysql+pymysql://appuser:momo@127.0.0.1:3306/license_inspection` |
+| `DATABASE_URL` | Yes | – | SQLAlchemy URL, e.g. `mysql+pymysql://<MYSQL_USER>:<MYSQL_PASSWORD>@127.0.0.1:3306/<MYSQL_DATABASE>` |
 | `SECRET_KEY` | Yes (production) | – | JWT signing secret, ≥ 32 chars, no placeholder |
 | `ENVIRONMENT` | No | `development` | `development` / `test` / `production` |
 | `DEBUG` | No | `false` | Debug mode (development only) |
