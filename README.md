@@ -19,24 +19,41 @@ docker compose up --build
 ```
 
 The API is then available at <http://localhost:8000> and the health check at
-<http://localhost:8000/health`.
+<http://localhost:8000/health>.
 
 ## Website
 
-The project ships with a static landing page (`docs/index.html`, served by
-the app at **`/`**) - it shows the live API status and links to the GitHub
-repository and the committed OpenAPI schema (`openapi.json`). Assets are
-served from `/assets/`. The JSON service descriptor is at `/api`.
+The app serves a role-aware web console at **`/`** (`docs/index.html` plus
+`docs/assets/`) — no framework or CDN, so it satisfies the app's strict
+`Content-Security-Policy`. Sign in with an account created by an administrator
+(`python -m scripts.seed` provisions demo data) to get:
+
+- **Dashboard** — facility, license and inspection totals, licenses expiring
+  within 30 days, and recent compliance activity.
+- **Facilities, Licenses, Inspections** — searchable, filterable, paginated
+  tables. Admins get create/edit/delete dialogs; inspectors can record and
+  update their own inspections; viewers are read-only.
+- **Users and Audit log** (admin only) — manage accounts and inspect the
+  immutable audit trail with action/entity/user/date filters.
+- **My profile** and **About this API** — update your account and read the
+  project overview.
+
+The JWT lives in `sessionStorage` and is cleared on logout or expiry. The
+sign-in screen keeps the project overview and links to the GitHub repository
+and the committed OpenAPI schema (`openapi.json`). Assets are served from
+`/assets/`; the JSON service descriptor is at `/api`.
 
 **On GitHub:** the repository hosts the project documentation — `README.md`,
 the API reference `docs/07-api-reference.md`, and the full generated OpenAPI
 schema `openapi.json` (committed from the app via `FastAPI.openapi()`). The project stands alone without Swagger: `DOCS_ENABLED=false` (the default)
 makes `/docs`, `/redoc` and `/openapi.json` return 404.
 
-**On GitHub Pages:** the project website is live at <https://mohammedyossef662.github.io/secure-license-inspection-tracking-api/>
-(source: `main` branch, `docs/` folder - GitHub Pages uses the folder as
-the site root). The landing page is the same `docs/index.html`; the app
-also serves it at `/` when running locally.
+**On GitHub Pages:** the `Deploy GitHub Pages` workflow publishes the `docs/`
+folder to <https://mohammedyossef662.github.io/secure-license-inspection-tracking-api/>
+on pushes to `main`. In **Settings → Pages**, set the build and deployment
+source to **GitHub Actions**. Pages can only host static files, so that copy
+shows a preview notice and disables sign-in; run the API (locally or on any
+container host) and open its root URL to use the full console.
 
 ## Quick start (local development)
 
@@ -70,7 +87,7 @@ All runtime settings are supplied through environment variables (see
 
 | Area | Method | Path | Auth | Description |
 |---|---|---|---|---|
-| Website | GET | `/` | Public | Landing page (live API status, docs links) |
+| Website | GET | `/` | Public | Web console / sign-in page (live API status, docs links) |
 | Operations | GET | `/health` | Public | Liveness / readiness check |
 | Operations | GET | `/api` | Public | Service descriptor (name, version, docs URLs) |
 | Auth | POST | `/auth/login` | Public | Obtain JWT access token |
@@ -112,7 +129,7 @@ input echoes.
 
 ## Deploy as a website
 
-The app is a self-contained Docker image (API + landing page), so any
+The app is a self-contained Docker image (API + web console), so any
 container host works. Two one-click options:
 
 **Render (blueprint — API + MySQL included)**
