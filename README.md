@@ -59,6 +59,11 @@ Pages can only host static files, so that copy shows a preview notice and
 disables sign-in; run the API (locally or on any container host) and open its
 root URL to use the full console.
 
+**Deploy the full app 24/7 for free:** follow
+[`docs/08-oracle-cloud-deployment.md`](docs/08-oracle-cloud-deployment.md) to run
+MySQL, the API and automatic HTTPS with Docker Compose on an Oracle Cloud
+Always Free VM.
+
 ## Quick start (local development)
 
 ```bash

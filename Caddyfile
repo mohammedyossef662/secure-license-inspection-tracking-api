@@ -1,0 +1,6 @@
+# Caddy obtains and renews a free TLS certificate for SITE_ADDRESS.
+# Set SITE_ADDRESS in .env.production (hostname only, no scheme).
+{$SITE_ADDRESS} {
+	encode zstd gzip
+	reverse_proxy api:8000
+}

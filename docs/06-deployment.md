@@ -12,6 +12,11 @@
 |---|---|---|
 | Local development | SQLite (file) or Docker MySQL 8 | `DATABASE_URL=sqlite+pysqlite:///./dev.db` |
 | Production / staging | MySQL 8 | Docker Compose service `db` (mysql:8.4) |
+| 24/7 public deployment | MySQL 8 | Oracle Cloud Always Free + Caddy HTTPS; see `08-oracle-cloud-deployment.md` |
+
+For a complete $0, always-on deployment, follow
+[`08-oracle-cloud-deployment.md`](08-oracle-cloud-deployment.md). It uses
+`docker-compose.prod.yml` (MySQL + API + Caddy) and `.env.production.example`.
 
 The application refuses to start with an invalid configuration in the
 `production` environment (see `app/core/config.py` production guards).
@@ -58,7 +63,7 @@ Ports: API `8000/tcp`, database `3306/tcp` (optional host binding).
 | `LOGIN_RATE_LIMIT_ATTEMPTS` | No | `5` | Max failed logins per window |
 | `LOGIN_RATE_LIMIT_WINDOW_SECONDS` | No | `60` | Rate-limit window |
 | `LOGIN_RATE_LIMIT_IP_MULTIPLIER` | No | `5` | Per-IP multiplier |
-| `SEED_ON_START` | No | `false` | Run seed script on container start |
+| `SEED_ON_START` | No | `false` | Run seed script on container start (production requires `SEED_ADMIN_PASSWORD`, `SEED_INSPECTOR_PASSWORD`, `SEED_VIEWER_PASSWORD`) |
 
 ---
 

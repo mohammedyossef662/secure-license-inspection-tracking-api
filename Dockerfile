@@ -14,6 +14,7 @@ COPY app ./app
 COPY alembic ./alembic
 COPY alembic.ini ./
 COPY docs ./docs
+COPY scripts ./scripts
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

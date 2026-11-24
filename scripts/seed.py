@@ -7,12 +7,14 @@ Run with::
 The script is idempotent and creates a small demo dataset: an administrator,
 inspectors and a viewer, plus one facility, license and inspection.
 
-All credentials are development-only defaults; production deployments must use
-real, strong credentials (see ``.env.example`` and ``docs/06-deployment.md``).
+In production (``ENVIRONMENT=production``) the passwords must be supplied via
+``SEED_ADMIN_PASSWORD``, ``SEED_INSPECTOR_PASSWORD`` and
+``SEED_VIEWER_PASSWORD``; the development defaults are refused.
 """
 
 from __future__ import annotations
 
+import os
 from datetime import date, timedelta
 
 from app.auth.password import hash_password
@@ -34,12 +36,26 @@ from app.models import (
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+
+def _seed_password(env_name: str, development_default: str) -> str:
+    """Return a seed password, refusing weak defaults in production."""
+
+    value = os.environ.get(env_name, "").strip()
+    if value:
+        return value
+    if os.environ.get("ENVIRONMENT", "").strip().lower() == "production":
+        raise SystemExit(
+            f"{env_name} must be set to a strong password before seeding in production."
+        )
+    return development_default
+
+
 ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "AdminPassword_123!"
+ADMIN_PASSWORD = _seed_password("SEED_ADMIN_PASSWORD", "AdminPassword_123!")
 INSPECTOR_USERNAME = "inspector_a"
-INSPECTOR_PASSWORD = "InspectorPassword_123!"
+INSPECTOR_PASSWORD = _seed_password("SEED_INSPECTOR_PASSWORD", "InspectorPassword_123!")
 VIEWER_USERNAME = "viewer_test"
-VIEWER_PASSWORD = "ViewerPassword_123!"
+VIEWER_PASSWORD = _seed_password("SEED_VIEWER_PASSWORD", "ViewerPassword_123!")
 
 FACILITY_NAME = "Nile Chemicals"
 FACILITY_REGISTRATION = "REG-1000"

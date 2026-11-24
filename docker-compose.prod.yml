@@ -1,0 +1,103 @@
+# Production stack: MySQL 8 + FastAPI + Caddy (automatic HTTPS).
+#
+# Usage:
+#   cp .env.production.example .env.production
+#   # edit .env.production (SITE_ADDRESS, passwords, SECRET_KEY)
+#   docker compose --env-file .env.production -f docker-compose.prod.yml up -d --build
+#
+# Only Caddy is exposed publicly (ports 80/443). The database and API stay on
+# the private Compose network.
+
+name: license-inspection
+
+services:
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in .env.production}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-license_inspection}
+      MYSQL_USER: ${MYSQL_USER:-appuser}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in .env.production}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ENVIRONMENT: production
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER:-appuser}:${MYSQL_PASSWORD:?}@db:3306/${MYSQL_DATABASE:-license_inspection}
+      SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in .env.production}
+      JWT_ISSUER: ${JWT_ISSUER:-license-inspection-api}
+      JWT_AUDIENCE: ${JWT_AUDIENCE:-license-inspection-api-clients}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+      ALLOWED_HOSTS: ${SITE_ADDRESS:?Set SITE_ADDRESS in .env.production}
+      ALLOWED_ORIGINS: https://${SITE_ADDRESS:?}
+      ENABLE_HSTS: "true"
+      TRUST_PROXY_HEADERS: "true"
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      SEED_ON_START: ${SEED_ON_START:-false}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-}
+      SEED_INSPECTOR_PASSWORD: ${SEED_INSPECTOR_PASSWORD:-}
+      SEED_VIEWER_PASSWORD: ${SEED_VIEWER_PASSWORD:-}
+    expose:
+      - "8000"
+    healthcheck:
+      test:
+        - "CMD"
+        - "python"
+        - "-c"
+        - "import urllib.request; req = urllib.request.Request('http://127.0.0.1:8000/health', headers={'Host': '${SITE_ADDRESS}'}); urllib.request.urlopen(req, timeout=3)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:?Set SITE_ADDRESS in .env.production}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  mysql_data:
+  caddy_data:
+  caddy_config:
