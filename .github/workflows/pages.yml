@@ -35,6 +35,11 @@ jobs:
         with:
           path: docs
 
+      # deploy-pages can query the artifact service before the upload is
+      # indexed and then fail with "No artifacts named github-pages".
+      - name: Let the Pages artifact settle
+        run: sleep 10
+
       - name: Deploy website
         id: deployment
         uses: actions/deploy-pages@v5
