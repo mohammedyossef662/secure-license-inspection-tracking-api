@@ -1,0 +1,24 @@
+# Fly.io configuration. Requires an external MySQL service and two secrets:
+#   fly secrets set DATABASE_URL="mysql+pymysql://user:pass@host/db"
+#   fly secrets set SECRET_KEY="$(openssl rand -hex 32)"
+app = "license-inspection-api"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  ENVIRONMENT = "production"
+  PORT = "8000"
+  DOCS_ENABLED = "false"
+  ACCESS_TOKEN_EXPIRE_MINUTES = "30"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  size = "shared-cpu-1x"

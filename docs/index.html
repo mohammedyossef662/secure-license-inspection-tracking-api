@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#070d18" />
+    <title>Regulatory License &amp; Inspection Tracking API</title>
+    <meta
+      name="description"
+      content="A secure REST API and web console for tracking regulated facilities, their licenses and inspection records."
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to main content</a>
+
+    <!-- ============================== SIGN-IN VIEW ============================== -->
+    <div id="login-view" class="auth-shell">
+      <header class="auth-topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3 4.5 6v5.5c0 4.5 3 8.2 7.5 9.5 4.5-1.3 7.5-5 7.5-9.5V6L12 3Z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </span>
+          <span class="brand-text">
+            <strong>License &amp; Inspection</strong>
+            <span>Compliance Console</span>
+          </span>
+        </div>
+        <nav class="auth-topbar-links" aria-label="Project links">
+          <a href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api/blob/main/openapi.json" target="_blank" rel="noopener">openapi.json</a>
+        </nav>
+      </header>
+
+      <main class="auth-main">
+        <section class="auth-hero" aria-labelledby="hero-title">
+          <p class="eyebrow">Secure compliance platform</p>
+          <h1 id="hero-title">Regulatory License &amp; Inspection Tracking API</h1>
+          <p class="lead">
+            A single, role-aware console for regulated facilities, operating
+            licenses and compliance inspections &mdash; backed by a hardened REST
+            API with audit logging and object-level authorization.
+          </p>
+
+          <div class="status-row">
+            <span id="login-status" class="badge badge-pending">Checking API&hellip;</span>
+            <span id="login-version" class="muted"></span>
+          </div>
+
+          <ul class="hero-points">
+            <li>
+              <span class="point-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4 10-10" /></svg>
+              </span>
+              <span><strong>Facilities &amp; licenses</strong>Register sites, issue licenses and spot expiry risk at a glance.</span>
+            </li>
+            <li>
+              <span class="point-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4 10-10" /></svg>
+              </span>
+              <span><strong>Inspections</strong>Record findings; inspectors can only change their own records.</span>
+            </li>
+            <li>
+              <span class="point-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4 10-10" /></svg>
+              </span>
+              <span><strong>Audit trail</strong>Every sign-in, permission denial and data change is logged for admins.</span>
+            </li>
+          </ul>
+
+          <div class="hero-links">
+            <a class="btn" href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api" target="_blank" rel="noopener">View source</a>
+            <a class="btn" href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api/blob/main/docs/06-deployment.md" target="_blank" rel="noopener">Deployment guide</a>
+          </div>
+        </section>
+
+        <section class="auth-card-wrap" aria-labelledby="signin-title">
+          <div class="auth-card">
+            <div class="auth-card-head">
+              <p class="eyebrow">Console access</p>
+              <h2 id="signin-title">Sign in</h2>
+              <p class="muted">Use your API account to open the console.</p>
+            </div>
+
+            <div id="login-notice" class="notice" role="status" hidden></div>
+            <noscript>
+              <div class="notice notice-warning">
+                The console needs JavaScript. You can still use the REST API
+                directly &mdash; see the API reference in the repository.
+              </div>
+            </noscript>
+
+            <form id="login-form" class="stack" novalidate>
+              <label class="field" for="login-username">
+                <span>Username</span>
+                <input
+                  id="login-username"
+                  name="username"
+                  type="text"
+                  autocomplete="username"
+                  autocapitalize="none"
+                  spellcheck="false"
+                  placeholder="e.g. admin"
+                  maxlength="50"
+                  required
+                />
+              </label>
+
+              <label class="field" for="login-password">
+                <span>Password</span>
+                <span class="password-wrap">
+                  <input
+                    id="login-password"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="Your password"
+                    maxlength="128"
+                    required
+                  />
+                  <button id="toggle-password" class="ghost-button" type="button" aria-label="Show password">Show</button>
+                </span>
+              </label>
+
+              <p id="login-error" class="form-error" role="alert" hidden></p>
+
+              <button id="login-submit" class="btn btn-primary btn-block" type="submit">
+                Sign in to console
+              </button>
+            </form>
+
+            <p class="auth-hint">
+              Accounts are provisioned by an administrator
+              (<code>POST /users</code>) or by running
+              <code>python -m scripts.seed</code> for demo data.
+            </p>
+          </div>
+
+          <p class="auth-footnote">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="10" width="16" height="10" rx="2" />
+              <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+            </svg>
+            JWT session &middot; role-based access &middot; audit logged
+          </p>
+        </section>
+      </main>
+
+      <footer class="auth-footer">
+        <p>
+          Regulatory License &amp; Inspection Tracking API &middot; MIT licensed &middot;
+          <a href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api" target="_blank" rel="noopener">Source on GitHub</a>
+          &middot;
+          <a href="https://github.com/mohammedyossef662/secure-license-inspection-tracking-api/blob/main/openapi.json" target="_blank" rel="noopener">openapi.json</a>
+        </p>
+      </footer>
+    </div>
+
+    <!-- ============================== CONSOLE VIEW ============================== -->
+    <div id="app-view" class="app-shell" hidden>
+      <div id="sidebar-backdrop" class="sidebar-backdrop" hidden></div>
+
+      <aside id="sidebar" class="sidebar" aria-label="Main navigation">
+        <div class="sidebar-brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3 4.5 6v5.5c0 4.5 3 8.2 7.5 9.5 4.5-1.3 7.5-5 7.5-9.5V6L12 3Z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </span>
+          <span class="brand-text">
+            <strong>License &amp; Inspection</strong>
+            <span>Compliance Console</span>
+          </span>
+        </div>
+
+        <nav id="main-nav" class="nav" aria-label="Sections">
+          <p class="nav-section">Operations</p>
+          <button class="nav-item" type="button" data-view="dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>
+            <span>Dashboard</span>
+          </button>
+          <button class="nav-item" type="button" data-view="facilities">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18" /><path d="M5 21V7l7-4 7 4v14" /><path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h.01M15 17h.01" /></svg>
+            <span>Facilities</span>
+          </button>
+          <button class="nav-item" type="button" data-view="licenses">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M8 9h5M8 13h8M8 17h4" /><circle cx="17" cy="9" r="2" /></svg>
+            <span>Licenses</span>
+          </button>
+          <button class="nav-item" type="button" data-view="inspections">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h6a1 1 0 0 1 1 1v1H8V5a1 1 0 0 1 1-1Z" /><path d="M8 6H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-2" /><path d="m9 14 2 2 4-4" /></svg>
+            <span>Inspections</span>
+          </button>
+
+          <p class="nav-section" data-roles="admin">Administration</p>
+          <button class="nav-item" type="button" data-view="users" data-roles="admin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+            <span>Users</span>
+          </button>
+          <button class="nav-item" type="button" data-view="audit" data-roles="admin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13" /><path d="M3 6h.01M3 12h.01M3 18h.01" /></svg>
+            <span>Audit log</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button class="nav-item" type="button" data-view="profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" /></svg>
+            <span>My profile</span>
+          </button>
+          <button class="nav-item" type="button" data-view="about">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></svg>
+            <span>About this API</span>
+          </button>
+
+          <div class="user-card">
+            <span id="user-avatar" class="avatar" aria-hidden="true">--</span>
+            <div class="user-meta">
+              <strong id="user-name">Signed in</strong>
+              <span id="user-role" class="role-badge">viewer</span>
+            </div>
+            <button id="logout-button" class="icon-button" type="button" title="Sign out" aria-label="Sign out">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="m16 17 5-5-5-5M21 12H9" /></svg>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="app-main">
+        <header class="topbar">
+          <button id="menu-button" class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+          </button>
+          <div class="topbar-titles">
+            <p id="view-eyebrow" class="eyebrow">Overview</p>
+            <h1 id="view-title">Dashboard</h1>
+          </div>
+          <div class="topbar-actions">
+            <span id="app-status" class="badge badge-pending">Checking API&hellip;</span>
+          </div>
+        </header>
+
+        <main id="content" class="content" tabindex="-1">
+          <div class="state"><span class="spinner" aria-hidden="true"></span><p>Loading console&hellip;</p></div>
+        </main>
+      </div>
+    </div>
+
+    <!-- ============================== MODAL ============================== -->
+    <div id="modal-root" class="modal-root" hidden>
+      <div class="modal-backdrop" data-action="close-modal"></div>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <header class="modal-header">
+          <div>
+            <h2 id="modal-title">Dialog</h2>
+            <p id="modal-subtitle" class="muted" hidden></p>
+          </div>
+          <button class="icon-button" type="button" data-action="close-modal" aria-label="Close dialog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+          </button>
+        </header>
+        <form id="modal-form" novalidate>
+          <div id="modal-body" class="modal-body"></div>
+          <p id="modal-error" class="form-error" role="alert" hidden></p>
+          <footer class="modal-footer">
+            <button class="btn" type="button" data-action="close-modal">Cancel</button>
+            <button id="modal-submit" class="btn btn-primary" type="submit">Save</button>
+          </footer>
+        </form>
+      </div>
+    </div>
+
+    <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="false"></div>
+
+    <script src="assets/app.js" defer></script>
+  </body>
+</html>
