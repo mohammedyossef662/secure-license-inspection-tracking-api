@@ -64,6 +64,11 @@ root URL to use the full console.
 MySQL, the API and automatic HTTPS with Docker Compose on an Oracle Cloud
 Always Free VM.
 
+**Deploy on a PaaS instead:** [`docs/09-paas-deployment.md`](docs/09-paas-deployment.md)
+covers Railway (`railway.toml`, one-click MySQL, ~$5/month) and Render
+(`render.yaml`, external MySQL required). Both give automatic HTTPS with no
+server administration.
+
 ## Quick start (local development)
 
 ```bash

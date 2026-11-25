@@ -24,6 +24,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - OWASP hardening controls: explicit access-token revocation via `POST /auth/logout`
   (token denylist until expiry), password complexity policy (min length plus
   upper/lower/digit/special), and request body size limit (64 KiB).
+- PaaS deployment: `railway.toml` (Docker + MySQL, automatic HTTPS) and a
+  corrected `render.yaml` that uses an external MySQL database, documented in
+  `docs/09-paas-deployment.md`.
+- The container entrypoint now waits for MySQL to accept connections before
+  running migrations, so PaaS boot order no longer causes a crash loop.
 
 ### Changed
 

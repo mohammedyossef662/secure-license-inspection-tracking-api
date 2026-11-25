@@ -13,6 +13,7 @@
 | Local development | SQLite (file) or Docker MySQL 8 | `DATABASE_URL=sqlite+pysqlite:///./dev.db` |
 | Production / staging | MySQL 8 | Docker Compose service `db` (mysql:8.4) |
 | 24/7 public deployment | MySQL 8 | Oracle Cloud Always Free + Caddy HTTPS; see `08-oracle-cloud-deployment.md` |
+| PaaS deployment | MySQL 8 | Railway (`railway.toml`) or Render (`render.yaml`); see `09-paas-deployment.md` |
 
 For a complete $0, always-on deployment, follow
 [`08-oracle-cloud-deployment.md`](08-oracle-cloud-deployment.md). It uses

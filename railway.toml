@@ -1,0 +1,18 @@
+# Railway deployment configuration.
+#
+# Railway builds the existing Dockerfile, injects PORT, and terminates HTTPS for
+# you. Add a MySQL service to the same project and point DATABASE_URL at it:
+#
+#   DATABASE_URL=mysql+pymysql://${{MySQL.MYSQLUSER}}:${{MySQL.MYSQLPASSWORD}}@${{MySQL.MYSQLHOST}}:${{MySQL.MYSQLPORT}}/${{MySQL.MYSQLDATABASE}}
+#
+# Full walkthrough: docs/09-paas-deployment.md
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# The entrypoint waits for MySQL, runs Alembic migrations, then starts uvicorn
+# on $PORT. Restart on failure so a slow database at boot does not kill the app.
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
